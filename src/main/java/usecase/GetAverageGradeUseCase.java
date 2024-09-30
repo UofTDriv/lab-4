@@ -4,6 +4,8 @@ import api.GradeDataBase;
 import entity.Grade;
 import entity.Team;
 
+import java.util.List;
+
 /**
  * GetAverageGradeUseCase class.
  */
@@ -29,9 +31,22 @@ public final class GetAverageGradeUseCase {
         // TODO Task 3a: Complete the logic of calculating the average course grade for
         //              your team members. Hint: the getGrades method might be useful.
 
+        String[] members = team.getMembers();
+        count = members.length;
+        for (int i = 0; i < members.length; i++) {
+            Grade[] grades = gradeDataBase.getGrades(members[i]);
+            for (int j = 0; j < grades.length; j++) {
+                if (grades[j].getCourse() == course) {
+                    sum += grades[j].getGrade();
+                    break;
+                }
+            }
+        }
+
         if (count == 0) {
             return 0;
         }
+
         return sum / count;
     }
 }
